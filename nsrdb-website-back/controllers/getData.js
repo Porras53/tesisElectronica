@@ -86,7 +86,7 @@ const getCoordinates = (latitude, longitude, callback) => {
       });
   });
 };
-
+//
 const getMapData = (year, callback) => {
   MongoUtils.then((client) => {
     client

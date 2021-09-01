@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, CircularProgress } from "@material-ui/core";
+//Librería para el manejo de gráficas
 import { ResponsiveLine } from "@nivo/line";
 import colors from "../../assets/colors/colors.json";
 
