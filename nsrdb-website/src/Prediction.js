@@ -1,3 +1,4 @@
+//PÁGINA PRINCIPAL PARA MAPA DE CAMBIO CLIMÁTICO
 import React, { useState } from "react";
 import MapParam from "./components/mapParam";
 import SideContent from "./components/sideContentParam/sidecontentparam";

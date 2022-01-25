@@ -100,7 +100,7 @@ const getMapData = (year, callback) => {
   });
 };
 
-//------------------------------
+//-----------------------Funciones para el mapa de cambio climático -----------------------
 
 const getRadData = (param, latitud, longitud, callback) => {
   MongoUtils.then((client) => {

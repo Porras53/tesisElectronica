@@ -1,3 +1,4 @@
+//PÁGINA PRINCIPAL PARA MAPA HISTÓRICO
 import React, { useState } from "react";
 import Map from "./components/map";
 import SideContent from "./components/sideContent/sidecontent";

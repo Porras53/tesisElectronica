@@ -1,3 +1,4 @@
+//INFORMACIÓN DE LA VARIABLE SELECCIONADA PARA EL MAPA DE CAMBIO CLIMÁTICO
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid, Card } from "@material-ui/core";

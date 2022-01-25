@@ -1,3 +1,4 @@
+//PANEL DE LA DERECHA DEL MAPA HISTÓRICO
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, Select, Tooltip, Typography } from "@material-ui/core";

@@ -19,6 +19,7 @@ router.get("/y/:year/:latlong", function (req, res, next) {
     }
   );
 });
+
 //Promedio 
 router.get("/prom/:scene/:latlong", function (req, res, next) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
@@ -130,8 +131,9 @@ router.get("/map/:year", function (req, res, next) {
 });
 
 
-//------------------------------------
+//-------------------Para el mapa de cambio climático-----------------
 
+//Todos los datos de radiación dado un escenario y un punto
 router.get("/rsds/:param/:latlong", function (req, res) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -151,6 +153,7 @@ router.get("/rsds/:param/:latlong", function (req, res) {
   );
 });
 
+//Todos los datos de temperatura dado un escenario y un punto
 router.get("/temp/:param/:latlong", function (req, res) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -170,6 +173,7 @@ router.get("/temp/:param/:latlong", function (req, res) {
   );
 });
 
+//Todos los datos de viento dado un escenario y un punto
 router.get("/wind/:param/:latlong", function (req, res) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -189,6 +193,7 @@ router.get("/wind/:param/:latlong", function (req, res) {
   );
 });
 
+//Promedio de los datos de radiación dado un escenario y un punto
 router.get("/rsdsProm/:param/:latlong", function (req, res) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -208,6 +213,7 @@ router.get("/rsdsProm/:param/:latlong", function (req, res) {
   );
 });
 
+//Promedio de los datos de temperatura dado un escenario y un punto
 router.get("/tempProm/:param/:latlong", function (req, res) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -227,7 +233,7 @@ router.get("/tempProm/:param/:latlong", function (req, res) {
   );
 });
 
-
+//Promedio de los datos de viento dado un escenario y un punto
 router.get("/windProm/:param/:latlong", function (req, res) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -247,6 +253,7 @@ router.get("/windProm/:param/:latlong", function (req, res) {
   );
 });
 
+//Promedio de los datos mensuales de radiación dado un escenario y un punto
 router.get("/rsdsM/:param/:latlong", function (req, res) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -266,6 +273,7 @@ router.get("/rsdsM/:param/:latlong", function (req, res) {
   );
 });
 
+//Promedio de los datos mensuales de temperatura dado un escenario y un punto
 router.get("/tempM/:param/:latlong", function (req, res) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -285,6 +293,7 @@ router.get("/tempM/:param/:latlong", function (req, res) {
   );
 });
 
+//Promedio de los datos mensuales de viento dado un escenario y un punto
 router.get("/windM/:param/:latlong", function (req, res) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -304,6 +313,7 @@ router.get("/windM/:param/:latlong", function (req, res) {
   );
 });
 
+//Retorna el punto
 router.get("/cp/:latlong", function (req, res) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -317,6 +327,7 @@ router.get("/cp/:latlong", function (req, res) {
   });
 });
 
+//Retorna el punto mas cercano
 router.get("/cp/near/:latlong", function (req, res, next) {
   latitude = parseFloat(req.params.latlong.split("+")[0]);
   longitude = parseFloat(req.params.latlong.split("+")[1]);
@@ -330,6 +341,7 @@ router.get("/cp/near/:latlong", function (req, res, next) {
   });
 });
 
+//Retorna el mapa dado una variable metereológica
 router.get("/mapP/:param", function (req, res) {
   getData.getMapParam(req.params.param, (result, error) => {
     if (error) {

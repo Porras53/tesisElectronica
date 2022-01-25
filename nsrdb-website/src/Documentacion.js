@@ -1,3 +1,4 @@
+//Documentación
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import strings from "./strings/es.json";
@@ -145,7 +146,7 @@ function Docs() {
 
           <Typography variant="body1" align="justify" gutterBottom>
             Para mayor información 
-                <a href="./pdf" target = "_blank">Click</a>
+                 Click
           </Typography>
 
 
