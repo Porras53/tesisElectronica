@@ -7,8 +7,9 @@ import constants from "../utils/constants";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoibmRpYXo5OCIsImEiOiJja2hsOXplNnYxNDRrMnRuMjU0Z2JsOHUxIn0.To4YKhzB_9tGdI-eSxuPcw";
+//mapboxgl.accessToken =
+//  "pk.eyJ1IjoiYWxlMTIwMSIsImEiOiJja3N5MjJxdDUwZ2cwMnVxb2ExZXlobWR2In0.UFH-8n44SjyQyLVEN-XtJQ";
+  
 
 const useStyles = makeStyles((theme) => ({
   mapcontainer: {
@@ -16,17 +17,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Map = (props) => {
+const MapParam = (props) => {
   const classes = useStyles();
   const mapContainerRef = useRef(null);
-  const year = props.year;
-  const variable = props.variable;
+  const param = props.param;
+  const variable = props.variable.replace('.', '');
   const coord = props.coord;
   const reloadMap = props.reloadMap;
 
   const [lng, setLng] = useState(-77);
   const [lat, setLat] = useState(5.26);
-  const [zoom, setZoom] = useState(4);
+  const [zoom, setZoom] = useState(4.7);
+
+
 
   var marker = new mapboxgl.Marker();
 
@@ -39,41 +42,41 @@ const Map = (props) => {
 
   // Initialize map when component mounts
   useEffect(() => {
-    axios.get(constants.backendURL + "/api/map/" + year).then((result) => {
+    axios.get(constants.backendURL + "/api/mapP/" + param).then((result) => {
       if (result.data.length === 0) {
         console.log("Error retrieving map data");
       } else {
         const data = result.data[0];
         props.onVariableLimitsChange(data[variable]);
-        const map = new mapboxgl.Map({
+        const mapP = new mapboxgl.Map({
           container: mapContainerRef.current,
           style: "mapbox://styles/mapbox/outdoors-v11",
           center: [lng, lat],
           zoom: zoom,
           maxZoom: 12,
-          minZoom: 4,
+          minZoom: 4.3,
         });
 
         // Add navigation control (the +/- zoom buttons)
-        map.addControl(new mapboxgl.NavigationControl(), "bottom-right");
+        mapP.addControl(new mapboxgl.NavigationControl(), "bottom-right");
 
         if (coord[0] !== 0 && coord[1] !== 0) {
-          marker.setLngLat(coord).addTo(map);
+          marker.setLngLat(coord).addTo(mapP);
         }
 
-        map.on("move", () => {
-          setLng(map.getCenter().lng.toFixed(4));
-          setLat(map.getCenter().lat.toFixed(4));
-          setZoom(map.getZoom().toFixed(2));
+        mapP.on("move", () => {
+          setLng(mapP.getCenter().lng.toFixed(4));
+          setLat(mapP.getCenter().lat.toFixed(4));
+          setZoom(mapP.getZoom().toFixed(2));
         });
 
-        map.on("load", function () {
-          map.addSource("tileset", {
+        mapP.on("load", function () {
+          mapP.addSource("tileset", {
             type: "vector",
             url: data["mapURL"],
           });
 
-          map.addLayer(
+          mapP.addLayer(
             {
               id: "puntos",
               type: "circle",
@@ -86,10 +89,10 @@ const Map = (props) => {
                   "interpolate",
                   ["linear"],
                   ["zoom"],
-                  4.75,
-                  3,
-                  12,
+                  3.5,
+                  4,
                   15,
+                  20,
                 ],
                 // Color circle by earthquake magnitude
                 "circle-color": [
@@ -122,29 +125,29 @@ const Map = (props) => {
 
         // When a click event occurs on a feature in the places layer, open a popup at the
         // location of the feature, with description HTML from its properties.
-        map.on("click", "puntos", function (e) {
+        mapP.on("click", "puntos", function (e) {
           const coordinates = e.features[0].geometry.coordinates.slice();
           props.onCoordChange(coordinates);
-          handleMarkerChange(coordinates, map);
+          handleMarkerChange(coordinates, mapP);
         });
 
         // Change the cursor to a pointer when the mouse is over the places layer.
-        map.on("mouseenter", "puntos", function () {
-          map.getCanvas().style.cursor = "pointer";
+        mapP.on("mouseenter", "puntos", function () {
+          mapP.getCanvas().style.cursor = "pointer";
         });
 
         // Change it back to a pointer when it leaves.
-        map.on("mouseleave", "puntos", function () {
-          map.getCanvas().style.cursor = "";
+        mapP.on("mouseleave", "puntos", function () {
+          mapP.getCanvas().style.cursor = "";
         });
 
         // Clean up on unmount
-        return () => map.remove();
+        return () => mapP.remove();
       }
     });
-  }, [variable, year, reloadMap]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [variable, param, reloadMap]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return <div className={classes.mapcontainer} ref={mapContainerRef} />;
 };
 
-export default Map;
+export default MapParam;

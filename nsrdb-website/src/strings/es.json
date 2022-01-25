@@ -12,6 +12,10 @@
   "averageMeteorologicalData": "Información Meteorológica Promedio",
   "averageTemperature": "Temperatura Promedio",
 
+  "aboutPp0": "El Explorador Solar de Colombia es una aplicación que permite observar el comportamiento histórico y estimado de la irradiación solar y variables metereológicas en el país.",  
+  "aboutPp1":"Actualmente, para el Atlas Solar Histórico se cuenta con datos de 22 años y 62187 puntos que cubren la totalidad del territorio colombiano, mostrando mediciones de seis variables: Irradiación Global Horizontal (GHI), Irradiación Difusa Horizontal (DHI), Irradiación Directa Normal (DNI), Velocidad del Viento, Elevación Solar y Temperatura Promedio. Mientras que para el Atlas Solar Estimado se cuenta con un promedio de estimaciones entre los años 2070 a 2099 para 2484 puntos que cubren el territorio colombiano. Estas predicciones se realizaron para Irradiación Global Horizontal (GHI), Temperatura y Velocidad de viento en  un escenario optimista y un escenario pesimista de cambio climático. Adicionalmente, se cuenta con diferentes tipos de gráficos que permiten observar el comportamiento de las diferentes variables para ambos Atlas, así como dos modelos de generación fotovoltáica para calcular una generación aproximada en cualquiera de los puntos. ",
+  "aboutPp22": "En el caso del Atlas Solar Histórico, los promedios utilizados para los gráficos y como fuente para calcular los modelos de generación fueron calculados teniendo en cuenta únicamente datos dentro del intervalo 8:00a.m.-5:00p.m.",
+
   "basic": "Básico",
   "basicModel": "Modelo Básico",
 
@@ -35,8 +39,8 @@
   "dcacInverterAndSystemLossP2": "Para las pérdidas operacionales totales (PT) se tiene un valor predeterminado de 14.08%, distribuido en suciedad (2%), sombras del entorno (3%), imperfecciones de fabricación (2%), cableado (2%), conectores (0.5%), degradación de celdas por luz incidente (1.5%), tiempo apagado (3%), y diferencia entre valores de laboratorio y especificaciones reales (1%).",
   "detailedGraph": "Gráfica Detallada",
   "DHI": "Irradiación Difusa Horizontal",
-  "diffuseHorizontal": "Difusa Horizontal",
-  "directNormal": "Directa Normal",
+  "diffuseHorizontal": "Difusa Horizontal (DHI)",
+  "directNormal": "Directa Normal  (DNI)",
   "DNI": "Irradiación Directa Normal",
   "documentation": "Documentación",
   "download": "Descargar",
@@ -50,7 +54,7 @@
   "generationModels": "Modelos de Generación",
   "generationModelsP1": "Para mostrar la generación en un año, se realizan los siguientes cálculos por cada uno de los días.",
   "GHI": "Irradiación Global Horizontal",
-  "globalHorizontal": "Global Horizontal",
+  "globalHorizontal": "Global Horizontal (GHI)",
   "graph": "Gráfico",
   "graphs": "Gráficos",
 
@@ -131,7 +135,8 @@
   "setupCharacteristics": "Características de la instalación",
   "setupType": "Tipo de montaje",
   "setupTypeDescription": "Tipo de montaje o instalación. Aislado: montaje en tierra. En techo: montaje en elevación",
-  "solarExplorer": "Atlas Solar",
+  "solarExplorer": "Mapa datos históricos (1998-2019)",
+  "solarTitle": "Atlas Solar",
   "solarZenithAngle": "Elevación solar",
   "summary": "Resumen",
 
@@ -147,5 +152,32 @@
   "yearlyAverageRadiation": "Irradiación Anual Promedio",
   "yearlyHistorical": "Histórico Anual",
   "yearlyValues": "Valores anuales",
-  "yearlyValuesPerHour": "Valores anuales por hora"
+  "yearlyValuesPerHour": "Valores anuales por hora",
+
+  "predict" : "Mapa cambio climático (2070-2099)",
+  "rsdsValues" : "Promedio de valores diarios de Irradiación",
+  "tempValues" : "Promedio de valores diarios de Temperatura",
+  "windValues" : "Promedio de valores diarios de Velocidad de viento",
+  "yearlyAverageMeteoro" : "Información metereológica promedio",
+  "dailyCycle": "Ciclo Diario",
+  "days" : "Día del año", 
+  "radiationGHI": "Global Horizontal (GHI)",
+
+  "Historicp1": "El Atlas Solar Histórico fue realizado con datos proporcionados por el National Solar Radiation Database (NSRDB), una colección de datos meteorológicos que incluyen: Irradiación Global Horizontal (GHI), Irradiación Directa Normal (DNI), Irradiación Difusa Horizontal (DHI), Temperatura y Velocidad de Viento. Los datos usados son de mediciones realizadas desde 1998 hasta 2019 con una resolución espacial de 4 x 4 Km. Para Colombia, se cuenta con 62187 coordenadas definidas por el NSRDB obteniendo información desde 1998 hasta 2019. Los datos mostrados en el Atlas Solar Histórico provienen de mediciones satelitales y el usuario es advertido de posibles diferencias con respecto a mediciones en sitio. Un análisis comparativo de los datos satelitales con datos en sitio se puede encontrar AQUI",
+  "Historicp2": "",
+  "Historicp3": "El Atlas Solar Histórico cuenta con dos funcionalidades principales: visualización de datos meteorológicos y estimación de la generación eléctrica fotovoltaica. La visualización de datos meteorológicos cuenta con dos posibles vistas:",
+  "Historicp4": "",
+  "Historicp5": "- Mapa de variables: Existe un mapa para las variables GHI, DHI, DNI, velocidad de viento y temperatura disponible para cada uno de los años desde 1998 hasta 2019. Cada mapa tiene los promedios anuales de todos los puntos, representando el valor de la variable seleccionada con una escala de color, siendo azul oscuro el valor más bajo y rojo el más alto. Al lado izquierdo del mapa se muestra un resumen con la latitud, longitud, elevación y los promedios anuales de las variables meteorológicas. En el mismo panel el usuario puede acceder a gráficas históricas y descargar los promedios de las variables para una coordenada seleccionada. Al lado derecho del mapa el usuario puede cambiar el mapa actual y acceder a la calculadora de generación fotovoltaica. ",
+  "Historicp6": "- Gráficas históricas: Los datos históricos se presentan en 5 diferentes tipos de gráficas dependiendo del tipo de promedios. Cada gráfica puede ser generada por las tres variables de irradiación solar, como también para la temperatura y velocidad de viento. Las gráficas que pueden ser generadas son: promedios por hora, promedios mensuales y promedios anuales.",
+  "Historicp7": "La estimación de la generación eléctrica fotovoltaica toma información básica de un arreglo de paneles solares y calcula la generación de energía por día y por mes. La información requerida dependerá del modelo de generación escogido por el usuario (básico o avanzado). El arreglo de datos resultante, que consiste en la energía generada por la matriz de paneles solares para cada día en un año específico, luego es usado para calcular la generación de energía promedio por mes, así como los valores de potencia mínima y máxima para ser mostrados en una gráfica.",
+
+  "Estimp1": "El Atlas Solar Estimado fue realizado con datos proporcionados por el Coordinated Regional Downscaling Experiment (CORDEX). Los datos usados son estimaciones realizadas por CORDEX para los años desde 2070 hasta 2099 para dos diferentes rutas de concentración representativas (RCP) que estiman diferentes escenarios de gases de efecto invernadero. El Atlas Solar Estimado analiza los escenarios climáticos para RCP2.6 (escenario optimista) y RCP8.5 (escenario pesimista). Para Colombia, se cuenta con 2484 coordenadas definidas por el CORDEX obteniendo información desde 2070 hasta 2099 de las variables irradiación solar horizontal (GHI), velocidad de viento y temperatura.",  
+  "Estimp2": "",  
+  "Estimp3": "El Atlas Solar Estimado cuenta con dos funcionalidades principales: visualización de datos meteorológicos y estimación de la generación eléctrica fotovoltaica. La visualización de datos meteorológicos cuenta con dos posibles vistas:",  
+  "Estimp4": "",  
+  "Estimp5": "- Mapa de variables: Existe un mapa para las variables irradiación, velocidad de viento y temperatura disponible para cada uno de los escenarios propuestos (RCP2.6 y RCP8.5). Cada mapa tiene los promedios del comportamiento de las variables estimadas entre los años 2070 y 2099 en todos los puntos, representando el valor de la variable seleccionada con una escala de color, siendo azul oscuro el valor más bajo y rojo el más alto. Al lado izquierdo del mapa se muestra un resumen con la latitud, longitud y los promedios de las variables mencionadas anteriormente. En el mismo panel el usuario puede acceder a gráficas del comportamiento de variables y descargar los promedios de las variables para una coordenada seleccionada. Al lado derecho del mapa el usuario puede cambiar el mapa actual y acceder a la calculadora de generación fotovoltaica. ",  
+  "Estimp6": "- Gráficas: los datos estimados se presentan en dos diferentes tipos de gráficas dependiendo del tipo de promedio. Cada gráfica puede ser generada para la irradiación solar, temperatura y velocidad de viento. Las gráficas que pueden ser generadas son: comportamiento mensual y comportamiento diario.",  
+  "Estimp7": "En el Atlas Solar Histórico y en el Atlar Solar Estimado se realiza una estimación de la generación eléctrica fotovoltaica tomando información básica de un arreglo de paneles solares y calculando la generación de energía por día y por mes. La información requerida dependerá del modelo de generación escogido por el usuario (básico o avanzado). El arreglo de datos resultante, que consiste en la energía generada por la matriz de paneles solares para cada día en un año específico, luego es usado para calcular la generación de energía promedio por mes, así como los valores de potencia mínima y máxima para ser mostrados en una gráfica.",
+
+  "PotFotovol": "Estimación de la generación eléctrica fotovoltaica"
 }

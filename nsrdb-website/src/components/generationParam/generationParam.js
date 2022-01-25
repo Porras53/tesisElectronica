@@ -7,10 +7,10 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import BasicForm from "./basicForm";
-import AdvancedForm from "./advancedForm";
-import GenerationResult from "./generationResult";
-import GenerationPopup from "./generationPopup";
+import BasicGeneration from "./basicGeneration";
+import AdvancedForm from "./advancedGeneration";
+import GenerationResult from "./resultParam";
+import GenerationPopup from "./generationPopParam";
 import constants from "../../utils/constants";
 import functions from "../../utils/functions";
 import strings from "../../strings/es.json";
@@ -23,12 +23,12 @@ const useStyles = makeStyles((theme) => ({
   errorIcon: {
     width: "120px",
     height: "120px",
-    color: colors.mainTheme,
+    color: colors.predictionSection,
   },
   alertText: {
     fontWeight: "bold",
     fontSize: "20px",
-    color: colors.mainTheme,
+    color: colors.predictionSection,
   },
   contentContainer: {
     background: colors.mainBackground,
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   titleContainer: {
     padding: "5px",
-    background: colors.mainTheme,
+    background: colors.predictionSection,
     marginBottom: "5px",
     width: "100%",
   },
@@ -54,8 +54,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GenerationForm = (props) => {
-  const year = props.year;
+  const param = props.param;
   const coord = props.coord;
+  const variable = props.variable.slice(3,6);
 
   const classes = useStyles();
 
@@ -63,22 +64,13 @@ const GenerationForm = (props) => {
   const [setup, setSetup] = useState("isolated");
 
   const [dailyData, setdailyData] = useState(null);
+  const [dailyTemperature, setdailyTemperature] = useState(null);
+  const [dailyWind, setdailyWind] = useState(null);
   const [dailyGraphData, setdailyGraphData] = useState(null);
   const [openDailyGraph, setOpenDailyGraph] = useState(false);
   const [capacityFactor, setCapacityFactor] = useState(0);
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
-
-  /*
-  const [predictionDailyData, setPredictionDailyData] = useState(null);
-  const [predictionDailyGraphData, setPredictionDailyGraphData] =
-    useState(null);
-  const [openPredictionDailyGraph, setOpenPredictionDailyGraph] =
-    useState(false);
-  const [predictionCapacityFactor, setPredictionCapacityFactor] = useState(0);
-  const [predictionMin, setPredictionMin] = useState(0);
-  const [predictionMax, setPredictionMax] = useState(0);
-  */
 
   const [formData, setFormData] = useState({
     N: constants.basicModelVariables[0].defaultValue,
@@ -88,6 +80,7 @@ const GenerationForm = (props) => {
     n: constants.basicModelVariables[4].defaultValue,
     PT: constants.basicModelVariables[5].defaultValue,
   });
+  
   const [advancedFormData, setAdvancedFormData] = useState({
     N: constants.advancedModelVariables[0].defaultValue,
     s: constants.advancedModelVariables[1].defaultValue,
@@ -101,6 +94,7 @@ const GenerationForm = (props) => {
     n: constants.advancedModelVariables[9].defaultValue,
     PT: constants.advancedModelVariables[10].defaultValue,
   });
+  
 
   const handleClickOpenDailyGraph = () => {
     setOpenDailyGraph(true);
@@ -109,16 +103,6 @@ const GenerationForm = (props) => {
   const handleCloseDailyGraph = () => {
     setOpenDailyGraph(false);
   };
-
-  /*
-  const handleClickOpenPredictionDailyGraph = () => {
-    setOpenDailyGraph(true);
-  };
-
-  const handleClosePredictionDailyGraph = () => {
-    setOpenDailyGraph(false);
-  };
-  */
 
   const handleFormDataChange = (prop) => (event) => {
     setFormData({ ...formData, [prop]: parseFloat(event.target.value) });
@@ -132,20 +116,19 @@ const GenerationForm = (props) => {
   const handleModelChange = (event) => {
     setModel(event.target.value);
     setdailyGraphData(null);
-    //setPredictionDailyGraphData(null);
   };
   const handleSetupChange = (event) => {
     setSetup(event.target.value);
   };
   const handleButtonClick = () => {
     setdailyGraphData(null);
-    //setPredictionDailyGraphData(null);
     setOpenDailyGraph(false);
-    //setOpenPredictionDailyGraph(false);
     if (model === "basic") {
-      const data_bas = functions.getBasicPowerGeneration(
+      const data_bas = functions.getBasicPowerGenerationParam(
         functions.round2(coord[1]),
         dailyData,
+        dailyTemperature,
+        dailyWind,
         setup,
         formData.N,
         formData.gamma,
@@ -154,33 +137,17 @@ const GenerationForm = (props) => {
         formData.n,
         formData.PT
       );
-      /*
-      const data_bas_pred = functions.getBasicPowerGeneration(
-        functions.round2(coord[1]),
-        predictionDailyData,
-        setup,
-        formData.N,
-        formData.gamma,
-        formData.beta,
-        formData.Pmp,
-        formData.n,
-        formData.PT
-      );
-      */
       setCapacityFactor(data_bas.CF);
       setMin(data_bas.min);
       setMax(data_bas.max);
       setdailyGraphData(data_bas.PAC_array);
-        /*
-      setPredictionCapacityFactor(data_bas_pred.CF);
-      setPredictionMin(data_bas_pred.min);
-      setPredictionMax(data_bas_pred.max);
-      setPredictionDailyGraphData(data_bas_pred.PAC_array);
-      */
+
     } else {
-      const data_adv = functions.getAdvancedPowerGeneration(
+      const data_adv = functions.getAdvancedPowerGenerationParam(
         functions.round2(coord[1]),
         dailyData,
+        dailyTemperature,
+        dailyWind,
         setup,
         advancedFormData.s,
         advancedFormData.N,
@@ -194,72 +161,51 @@ const GenerationForm = (props) => {
         advancedFormData.n,
         advancedFormData.PT
       );
-        /*
-      const data_adv_pred = functions.getAdvancedPowerGeneration(
-        functions.round2(coord[1]),
-        predictionDailyData,
-        setup,
-        advancedFormData.s,
-        advancedFormData.N,
-        advancedFormData.beta,
-        advancedFormData.iscref,
-        advancedFormData.vocref,
-        advancedFormData.impref,
-        advancedFormData.vmpref,
-        advancedFormData.alphaisc,
-        advancedFormData.betavoc,
-        advancedFormData.n,
-        advancedFormData.PT
-      );
-      */
-
       setCapacityFactor(data_adv.CF);
       setMin(data_adv.min);
       setMax(data_adv.max);
       setdailyGraphData(data_adv.PAC_array);
-        /*
-      setPredictionCapacityFactor(data_adv_pred.CF);
-      setPredictionMin(data_adv_pred.min);
-      setPredictionMax(data_adv_pred.max);
-      setPredictionDailyGraphData(data_adv_pred.PAC_array);
-      */
-     }
+    }
   };
 
   useEffect(() => {
     if (coord[0] !== 0 && coord[1] !== 0) {
-      const getLon = functions.round2(coord[0]);
-      const getLat = functions.round2(coord[1]);
-
-      var requests = [
-        axios.get(
-          constants.backendURL + "/api/d/" + year + "/" + getLat + "+" + getLon
-        ),
-        axios.get(
-          constants.backendURL + "/api/d/2030/" + getLat + "+" + getLon
-        ),
-      ];
-
-      axios.all(requests).then(
-        axios.spread((...responses) => {
-          var error = false;
-          responses.forEach((response) => {
-            if (response.status !== 200) {
-              error = true;
+        const getLon = coord[0];
+        const getLat = coord[1];
+  
+        var requests = [
+          axios.get(
+            constants.backendURL + "/api/rsds/" + variable + "/" + getLat + "+" + getLon
+          ), 
+          axios.get(
+            constants.backendURL + "/api/temp/" + variable + "/" + getLat + "+" + getLon
+          ),
+          axios.get(
+            constants.backendURL + "/api/wind/" + variable + "/" + getLat + "+" + getLon
+          )
+        ];
+  
+        axios.all(requests).then(
+          axios.spread((...responses) => {
+            var error = false;
+            responses.forEach((response) => {
+              if (response.status !== 200) {
+                error = true;
+              }
+            });
+            if (!error) {
+              setdailyData(responses[0].data[0]);
+              setdailyTemperature(responses[1].data[0]);
+              setdailyWind(responses[2].data[0]);
+              setdailyGraphData(null);
             }
-          });
-          if (!error) {
-            setdailyData(responses[0].data[0]);
-            setdailyGraphData(null);
-            //setPredictionDailyData(responses[1].data[0]);
-            //setPredictionDailyGraphData(null);
-          }
-        })
-      );
+          })
+        );
     }
-  }, [year, coord]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [variable, coord]);
 
-  if (dailyData === null /*|| predictionDailyData === null*/) {
+  if (dailyData === null ) {
     return (
       <Card className={classes.contentContainer}>
         <Grid
@@ -313,25 +259,26 @@ const GenerationForm = (props) => {
             </Grid>
           </Grid>
           {model === "basic" ? (
-            <BasicForm
+            <BasicGeneration
               setup={setup}
               handleSetupChange={handleSetupChange}
               handleFormDataChange={handleFormDataChange}
               handleButtonClick={handleButtonClick}
             />
-          ) : (
-            <AdvancedForm
+            ):(
+              <AdvancedForm
               setup={setup}
               handleSetupChange={handleSetupChange}
               handleAdvancedFormDataChange={handleAdvancedFormDataChange}
               handleButtonClick={handleButtonClick}
             />
-          )}
+            )
+          }
           <Grid item>
             <GenerationResult
-              title={strings.powerGeneratedByMonth + " - " + year}
+              title={strings.powerGeneratedByMonth + " - RCP" + variable}
               data={dailyGraphData}
-              year={year}
+              param={param}
               CF={capacityFactor}
               min={min}
               max={max}
@@ -339,13 +286,14 @@ const GenerationForm = (props) => {
               isPredict={false}
             />
             <GenerationPopup
-              title={strings.powerGeneratedByDay + " - " + year}
+              title={strings.powerGeneratedByDay + " - " + param}
               data={dailyGraphData}
               handleClickOpenDailyGraph={handleClickOpenDailyGraph}
               openDailyGraph={openDailyGraph}
               handleCloseDailyGraph={handleCloseDailyGraph}
             />
           </Grid>
+          
         </Grid>
       </Card>
     );

@@ -1,13 +1,14 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, CircularProgress } from "@material-ui/core";
-//Librería para el manejo de gráficas
-import { ResponsiveLine } from "@nivo/line";
+import { ResponsiveBar } from "@nivo/bar";
+import constants from "../../utils/constants";
+import strings from "../../strings/es.json";
 import colors from "../../assets/colors/colors.json";
 
 const useStyles = makeStyles((theme) => ({
   titleContainer: {
     padding: "5px",
-    background: colors.mainTheme,
+    background: colors.predictionSection,
     marginBottom: "5px",
     width: "100%",
   },
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const GenerationGraph = (props) => {
   const classes = useStyles();
-  if (props.graphdata === null) {
+  if (props.graphData === null) {
     return (
       <Grid container justify="center" className={classes.loadingContainer}>
         <Grid item>
@@ -38,44 +39,29 @@ const GenerationGraph = (props) => {
   } else {
     return (
       <div className={classes.graphContainer}>
-        <ResponsiveLine
+        <ResponsiveBar
           data={props.graphData}
-          margin={{ top: 10, right: 10, bottom: 80, left: 50 }}
-          colors={{ scheme: "category10" }}
-          xScale={{ type: "point" }}
-          yScale={{
-            type: "linear",
-            min: "auto",
-            max: "auto",
-            stacked: true,
-            reverse: false,
-          }}
-          yFormat=" >-.2f"
+          keys={["Potencia"]}
+          indexBy="month"
+          margin={{ top: 10, right: 10, bottom: 20, left: 50 }}
+          padding={0.3}
+          valueScale={{ type: "linear", round: true }}
+          indexScale={{ type: "band", round: true }}
+          colors={{ scheme: props.colors }}
+          enableLabel={false}
           axisTop={null}
           axisRight={null}
-          axisBottom={{
-            format: values => {
-              return "";
-            },
-            legend: "Day of the year",
-            legendOffset: +30,
-            legendPosition: "middle",
-          }}
+          axisBottom={constants.months}
           axisLeft={{
-            orient: "left",
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: "kW",
-            legendOffset: -40,
+            legend: strings.powerWithUnits,
             legendPosition: "middle",
+            legendOffset: -40,
           }}
-          pointSize={10}
-          pointColor={{ theme: "background" }}
-          pointBorderWidth={2}
-          pointBorderColor={{ from: "serieColor" }}
-          pointLabelYOffset={-12}
-          useMesh={true}
+          labelSkipWidth={12}
+          labelSkipHeight={12}
         />
       </div>
     );

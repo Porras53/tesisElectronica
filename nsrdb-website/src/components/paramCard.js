@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Select, Tooltip, Typography } from "@material-ui/core";
+import { Grid, Tooltip, Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Card from "@material-ui/core/Card";
+import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import Dialog from "@material-ui/core/Dialog";
@@ -20,12 +21,12 @@ import constants from "../utils/constants";
 import functions from "../utils/functions";
 import strings from "../strings/es.json";
 import colors from "../assets/colors/colors.json";
-
+import Background from '../assets/images/colorBarArrow.png';
 
 const useStyles = makeStyles((theme) => ({
   titleContainer: {
     padding: "5px",
-    background: colors.mainTheme,
+    background: colors.predictionSection,
     marginBottom: "5px",
   },
   titleText: {
@@ -61,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
   },
   searchButton: {
-    background: colors.buttonBackground,
+    background: colors.buttonSearchPredict,
     color: colors.buttonText,
   },
   icon: {
@@ -69,16 +70,23 @@ const useStyles = makeStyles((theme) => ({
     height: "30px",
     cursor: "pointer",
   },
-  button:{
-    background: colors.selectedButton
-  },
   colorBar: {
     marginLeft: "10px",
     marginRight: "10px",
     height: "10px",
     backgroundImage:
-      "linear-gradient(to right, #0000ff,#4169e1,#00ffff,#00ff00,#ffff00,#ff0000)",
+    "linear-gradient(to right, #0000ff,#4169e1,#00ffff,#00ff00,#ffff00,#ff0000)",
+      
   },
+  colorBarViento: {
+    marginLeft: "9px",
+    marginRight: "8px",
+    height: "9px",
+    backgroundImage:
+    "url(" + Background + ")",
+      
+  },
+  
   colorBarLabel: {
     fontSize: "10px",
   },
@@ -118,58 +126,51 @@ const disableButton = (lon, lat) => {
 const InfoCard = (props) => {
   const classes = useStyles();
   const selectedCoord = props.coord;
-  const year = props.year;
+  const param = props.param;
   let variable = props.variable;
   const reloadMap = props.reloadMap;
   const lowerLimit = props.variableLimits[0];
   const upperLimit = props.variableLimits[1];
   const limitDiff = upperLimit - lowerLimit;
 
-  const [anchorElYear, setAnchorElYear] = useState(null);
+  const [anchorElParam, setAnchorElParam] = useState(null);
   const [anchorElVariable, setAnchorElVariable] = useState(null);
   const [searchCoords, setSearchCoords] = useState({ lat: 0, lon: 0 });
   const [openError, setOpenError] = useState(false);
+
 
   const handleCloseError = () => {
     setOpenError(false);
   };
 
-  const handleYear = (year) => {
-    props.onYearChange(year);
-    setAnchorElYear(null);
+  const handleParam = (param) => {
+    props.onParamChange(param);
+    setAnchorElParam(null);
   };
 
-  const handleYearClick = (event) => {
-    setAnchorElYear(event.currentTarget);
+  const handleParamClick = (event) => {
+    setAnchorElParam(event.currentTarget);
   };
 
   const handleVariable = (variable) => {
-    if (variable === "Temperatura"){
-      variable = "Temperature"
+    if (variable === "Escenario Optimista"){
+      variable = "RCP2.6"
     }
-    if (variable === "Velocidad de Viento"){
-      variable = "Wind Speed"
-    }
-    if (variable === "Global Horizontal"){
-      variable = "GHI"
-    }
-    if (variable === "Difusa Horizontal"){
-      variable = "DHI"
-    }
-    if (variable === "Directa Normal"){
-      variable = "DNI"
+    if (variable === "Escenario Pesimista"){
+      variable = "RCP8.5"
     }
     props.onVariableChange(variable);
     setAnchorElVariable(null);
   };
 
   const handleVariableClick = (event) => {
+    variable = "Escenario"
     setAnchorElVariable(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorElVariable(null);
-    setAnchorElYear(null);
+    setAnchorElParam(null);
   };
 
   const handleContentClick = (content) => {
@@ -188,7 +189,7 @@ const InfoCard = (props) => {
       axios
         .get(
           constants.backendURL +
-            "/api/c/near/" +
+            "/api/cp/near/" +
             searchCoords.lat +
             "+" +
             searchCoords.lon
@@ -202,13 +203,10 @@ const InfoCard = (props) => {
         );
     }
   };
-
-  if(variable === "Wind Speed"){variable="Velocidad de Viento"}
-  if(variable === "Temperature"){variable="Temperatura"}
-  if (variable === "GHI"){variable = "Global Horizontal"}
-  if (variable === "DHI"){variable = "Difusa Horizontal"}
-  if (variable === "DNI"){variable = "Directa Normal"}
-  return (
+  if(param === 'Velocidad de viento'){
+    if(variable === "RCP2.6"){variable="Escenario Optimista"}
+    if(variable === "RCP8.5"){variable="Escenario Pesimista"}
+    return (
     <Card className={classes.container}>
       <Grid container className={classes.titleContainer}>
         <Typography className={classes.titleText}>
@@ -253,21 +251,21 @@ const InfoCard = (props) => {
       <Grid container justify="center">
         <Grid item>
           <FormControl>
-          <InputLabel id="demo-simple-select-label"></InputLabel>
+          <InputLabel id="demo-simple-select-label">Año</InputLabel>
           <Select
-            id="year-menu"
-            value={year}
-            onClick={handleYearClick}
+            id="param-menu"
+            value={param}
+            onClick={handleParamClick}
             onClose={handleClose}
-            anchorEl={anchorElYear}
+            anchorEl={anchorElParam}
           >
-            {constants.years.map((year) => (
+            {constants.parameters.map((param) => (
               <MenuItem
                 className={classes.menuitem}
-                value={year}
-                onClick={() => handleYear(year)}
+                value={param}
+                onClick={() => handleParam(param)}
               >
-                {year}
+                {param}
               </MenuItem>
             ))}
           </Select>
@@ -275,56 +273,34 @@ const InfoCard = (props) => {
         </Grid>
         <Grid item>
         <FormControl>
-        <InputLabel id="demo-simple-select-label2"></InputLabel>
+          <InputLabel id="demo-simple-select-label"></InputLabel>
           <Select
             id="variable-menu"
             value={variable}
             onClick={handleVariableClick}
             onClose={handleClose}
             anchorEl={anchorElVariable}
-            
           >
             <MenuItem
               className={classes.menuitem}
-              value={"Global Horizontal"}
-              onClick={() => handleVariable("Global Horizontal")}
-              >
-              {"Global Horizontal"}
+              value={"Escenario Optimista"}
+              onClick={() => handleVariable("Escenario Optimista")}
+            >
+              {"Escenario Optimista"}
             </MenuItem>
             <MenuItem
               className={classes.menuitem}
-              value={"Difusa Horizontal"}
-              onClick={() => handleVariable("Difusa Horizontal")}
-              >
-              {"Difusa Horizontal"}
-            </MenuItem>
-            <MenuItem
-              className={classes.menuitem}
-              value={"Directa Normal"}
-              onClick={() => handleVariable("Directa Normal")}
-              >
-              {"Directa Normal"}
-            </MenuItem>
-            <MenuItem
-              className={classes.menuitem}
-              value={"Velocidad de Viento"}
-              onClick={() => handleVariable("Velocidad de Viento")}
-              >
-              {"Velocidad de Viento"}
-            </MenuItem>
-            <MenuItem
-              className={classes.menuitem}
-              value={"Temperatura"}
-              onClick={() => handleVariable("Temperatura")}
-              >
-              {"Temperatura"}
+              value={"Escenario Pesimista"}
+              onClick={() => handleVariable("Escenario Pesimista")}
+            >
+              {"Escenario Pesimista"}
             </MenuItem>
           </Select>
           </FormControl>
         </Grid>
       </Grid>
       <Grid container justify="center" alignItems="center">
-        <Grid item xs={12} className={classes.colorBar} />
+        <Grid item xs={12} className={classes.colorBarViento} />
         <Grid item xs={2}>
           <Typography align="center" className={classes.colorBarLabel}>
             {functions.round2(lowerLimit)}
@@ -376,12 +352,12 @@ const InfoCard = (props) => {
       <Grid container justify="center">
         <Grid item xs={6}>
           <Typography align="center" className={classes.coordContent}>
-            {selectedCoord[0] === 0 ? "--" : functions.round2(selectedCoord[1])}
+            {selectedCoord[0] === 0 ? "--" : functions.round3(selectedCoord[1])}
           </Typography>
         </Grid>
         <Grid item xs={6}>
           <Typography align="center" className={classes.coordContent}>
-            {selectedCoord[1] === 0 ? "--" : functions.round2(selectedCoord[0])}
+            {selectedCoord[1] === 0 ? "--" : functions.round3(selectedCoord[0])}
           </Typography>
         </Grid>
       </Grid>
@@ -451,6 +427,232 @@ const InfoCard = (props) => {
       </Grid>
     </Card>
   );
+  }
+  else{
+    if(variable === "RCP2.6"){variable="Escenario Optimista"}
+    if(variable === "RCP8.5"){variable="Escenario Pesimista"}
+    return (
+      <Card className={classes.container}>
+        <Grid container className={classes.titleContainer}>
+          <Typography className={classes.titleText}>
+            {strings.resources.toUpperCase()}
+          </Typography>
+        </Grid>
+        <Grid container justify="center">
+          <Grid item>
+            <Tooltip title={strings.seeMeteorologicalData}>
+              <IconButton
+                aria-label="delete"
+                onClick={() => handleContentClick(0)}
+              >
+                <img
+                  src={DataIcon}
+                  className={classes.icon}
+                  alt={strings.meteorologicalDataIcon}
+                />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+          <Grid item>
+            <Tooltip title={strings.estimatePhotovoltaicGeneration}>
+              <IconButton
+                aria-label="delete"
+                onClick={() => handleContentClick(1)}
+              >
+                <img
+                  src={GenerationIcon}
+                  className={classes.icon}
+                  alt={strings.generationIcon}
+                />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Grid>
+        <Grid container className={classes.titleContainer}>
+          <Typography className={classes.titleText}>
+            {strings.currentMap.toUpperCase()}
+          </Typography>
+        </Grid>
+        <Grid container justify="center">
+          <Grid item>
+          <FormControl>
+          <InputLabel id="demo-simple-select-label"></InputLabel>
+          <Select
+            id="param-menu"
+            value={param}
+            onClick={handleParamClick}
+            onClose={handleClose}
+            anchorEl={anchorElParam}
+          >
+            {constants.parameters.map((param) => (
+              <MenuItem
+                className={classes.menuitem}
+                value={param}
+                onClick={() => handleParam(param)}
+              >
+                {param}
+              </MenuItem>
+            ))}
+          </Select>
+          </FormControl>
+          </Grid>
+          <Grid item>
+          <FormControl>
+          <InputLabel id="demo-simple-select-label"></InputLabel>
+          <Select
+            id="variable-menu"
+            value={variable}
+            onClick={handleVariableClick}
+            onClose={handleClose}
+            anchorEl={anchorElVariable}
+          >
+            <MenuItem
+              className={classes.menuitem}
+              value={"Escenario Optimista"}
+              onClick={() => handleVariable("Escenario Optimista")}
+            >
+              {"Escenario Optimista"}
+            </MenuItem>
+            <MenuItem
+              className={classes.menuitem}
+              value={"Escenario Pesimista"}
+              onClick={() => handleVariable("Escenario Pesimista")}
+            >
+              {"Escenario Pesimista"}
+            </MenuItem>
+          </Select>
+          </FormControl>
+          </Grid>
+        </Grid>
+        <Grid container justify="center" alignItems="center">
+          <Grid item xs={12} className={classes.colorBar} />
+          <Grid item xs={2}>
+            <Typography align="center" className={classes.colorBarLabel}>
+              {functions.round2(lowerLimit)}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center" className={classes.colorBarLabel}>
+              {functions.round2(lowerLimit + 0.2 * limitDiff)}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center" className={classes.colorBarLabel}>
+              {functions.round2(lowerLimit + 0.4 * limitDiff)}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center" className={classes.colorBarLabel}>
+              {functions.round2(lowerLimit + 0.6 * limitDiff)}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center" className={classes.colorBarLabel}>
+              {functions.round2(lowerLimit + 0.8 * limitDiff)}
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
+            <Typography align="center" className={classes.colorBarLabel}>
+              {functions.round2(upperLimit)}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container className={classes.titleContainer}>
+          <Typography className={classes.titleText}>
+            {strings.selectedCoordinates.toUpperCase()}
+          </Typography>
+        </Grid>
+        <Grid container justify="center">
+          <Grid item xs={6}>
+            <Typography align="center" className={classes.coordTitle}>
+              {strings.latitude.toUpperCase()}
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography align="center" className={classes.coordTitle}>
+              {strings.longitude.toUpperCase()}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container justify="center">
+          <Grid item xs={6}>
+            <Typography align="center" className={classes.coordContent}>
+              {selectedCoord[0] === 0 ? "--" : functions.round3(selectedCoord[1])}
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography align="center" className={classes.coordContent}>
+              {selectedCoord[1] === 0 ? "--" : functions.round3(selectedCoord[0])}
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container className={classes.titleContainer}>
+          <Typography className={classes.titleText}>
+            {strings.search.toUpperCase()}
+          </Typography>
+        </Grid>
+        <Grid
+          container
+          alignItems="center"
+          spacing={1}
+          className={classes.searchContainer}
+        >
+          <Grid item xs={6} align="center">
+            <TextField
+              id="latSearch"
+              type="number"
+              variant="outlined"
+              size="small"
+              label={strings.latitude}
+              error={verifyLat(searchCoords.lat)}
+              className={classes.searchBar}
+              onChange={handleSearchCoordsChange("lat")}
+            />
+          </Grid>
+          <Grid item xs={6} align="center">
+            <TextField
+              id="lonSearch"
+              type="number"
+              variant="outlined"
+              size="small"
+              label={strings.longitude}
+              error={verifyLon(searchCoords.lon)}
+              className={classes.searchBar}
+              onChange={handleSearchCoordsChange("lon")}
+            />
+          </Grid>
+          <Grid container justify="center">
+            <Button
+              variant="contained"
+              className={classes.searchButton}
+              onClick={handleSearchButtonClick}
+              disabled={disableButton(searchCoords.lon, searchCoords.lat)}
+            >
+              {strings.search}
+            </Button>
+            <Dialog
+              open={openError}
+              onClose={handleCloseError}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">Error</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  {strings.coordinatesNotFoundError}
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseError} color="primary" autoFocus>
+                  {strings.close}
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Grid>
+        </Grid>
+      </Card>
+    );
+  }
 };
 
 export default InfoCard;

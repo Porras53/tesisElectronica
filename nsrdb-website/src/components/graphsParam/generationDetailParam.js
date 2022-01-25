@@ -1,13 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid, CircularProgress } from "@material-ui/core";
-//Librería para el manejo de gráficas
 import { ResponsiveLine } from "@nivo/line";
 import colors from "../../assets/colors/colors.json";
 
 const useStyles = makeStyles((theme) => ({
   titleContainer: {
     padding: "5px",
-    background: colors.mainTheme,
+    background: colors.predictionSection,
     marginBottom: "5px",
     width: "100%",
   },
@@ -36,6 +35,7 @@ const GenerationGraph = (props) => {
       </Grid>
     );
   } else {
+    console.log(props.graphData)
     return (
       <div className={classes.graphContainer}>
         <ResponsiveLine
@@ -50,6 +50,7 @@ const GenerationGraph = (props) => {
             stacked: true,
             reverse: false,
           }}
+          
           yFormat=" >-.2f"
           axisTop={null}
           axisRight={null}

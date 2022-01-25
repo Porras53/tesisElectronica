@@ -4,6 +4,27 @@ const backendURL = "http://localhost:3001";
 
 let yearStart = 1998;
 let yearEnd = 2019;
+
+let firstDay = 1;
+let lastDay = 361;
+
+const days = Array (lastDay - firstDay).fill().map(()=> firstDay++);
+
+const days2 = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13"
+]
 const years = Array(yearEnd - yearStart + 1)
   .fill()
   .map(() => yearStart++);
@@ -50,12 +71,55 @@ const variables = [
   "elevation",
 ];
 
+const variablesAux = [
+  "GHI",
+  "DHI",
+  "DNI",
+  "Velocidad de viento",
+  "Temperatura",
+];
+const parameters = [
+  "GHI",
+  "Temperatura",
+  "Velocidad de viento",
+];
+
+const RCP = [
+  "RCP2.6",
+  "RCP8.5",
+];
+
+
+const RCPnum = [
+  "26",
+  "85",
+];
+
+const parametersTitles = {
+  Irradiation: strings.radiation,
+  Temperature: strings.temperature,
+  "Wind Speed": strings.windSpeed,
+};
+
+const parametersTitles2 = {
+  Irradiacion: strings.radiation,
+  Temperatura: strings.temperature,
+  "Velocidad de viento": strings.windSpeed,
+};
+
+
 const variableTitles = {
   GHI: strings.GHI,
   DHI: strings.DHI,
   DNI: strings.DNI,
   "Wind Speed": strings.windSpeed,
   Temperature: strings.temperature,
+};
+
+const parametersMeasurements = {
+  Radiation: "W/m2",
+  Temperature: "°C",
+  "Wind Speed": "m/s",
 };
 
 const variableMeasurements = {
@@ -68,6 +132,15 @@ const variableMeasurements = {
   "Wind Speed": "m/s",
   "Solar Zenith Angle": "°",
   Temperature: "°C",
+  Irradiation: "W/m2"
+};
+
+const variableMeasurements2 = {
+  latitude: "°",
+  longitude: "°",
+  "Velocidad de viento": "m/s",
+  Temperatura: "°C",
+  Irradiacion: "W/m2"
 };
 
 const setups = [
@@ -194,6 +267,16 @@ const constants = {
   setups,
   basicModelVariables,
   advancedModelVariables,
+  parameters, 
+  RCP,
+  parametersTitles,
+  parametersMeasurements,
+  RCPnum,
+  variableMeasurements2,
+  parametersTitles2, 
+  days,
+  days2, 
+  variablesAux
 };
 
 export default constants;
