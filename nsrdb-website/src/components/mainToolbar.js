@@ -89,6 +89,7 @@ export default function MainToolbar(props) {
   var c1 = classes.tab2;
   var c2 = classes.tab2;
   var c3 = classes.tab2;
+  var c4 = classes.tab2;
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -105,6 +106,10 @@ export default function MainToolbar(props) {
   if(window.location.pathname.slice(1)==="docs"){
     ini = 4;
     c3 = classes.tab;
+  }
+  if(window.location.pathname.slice(1)==="tutorial"){
+    ini = 6;
+    c4 = classes.tab;
   }
 
   return (
@@ -148,6 +153,14 @@ export default function MainToolbar(props) {
               href = "/docs"
             >
             </Tab>
+            <Typography className={classes.miniSpace}></Typography>
+            <Tab
+              className={c4}
+              label={strings.tutorial}
+              {...a11yProps(6)}
+              href = "/tutorial"
+            >
+            </Tab>
           </Tabs>
           <TabPanel value={value} index={0} href = "/">
             <Link className={classes.link} to="/">
@@ -159,6 +172,10 @@ export default function MainToolbar(props) {
           </TabPanel>
           <TabPanel value={value} index={4} href = "/docs">
             <Link className={classes.link} to="/docs">
+            </Link>
+          </TabPanel>
+          <TabPanel value={value} index={6} href = "/tutorial">
+            <Link className={classes.link} to="/tutorial">
             </Link>
           </TabPanel>
 

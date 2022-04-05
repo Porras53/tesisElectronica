@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Button,
+  TextField,
+  MenuItem,
+  Popover,} from "@material-ui/core";
 import NotListedLocationIcon from "@material-ui/icons/NotListedLocation";
 import VariableCard from "../variableCard";
 import SummaryGraph from "../graphs/summaryGraph";
@@ -9,6 +12,7 @@ import constants from "../../utils/constants";
 import functions from "../../utils/functions";
 import strings from "../../strings/es.json";
 import colors from "../../assets/colors/colors.json";
+import BasicHelpIcon from "./basicHelpIcon";
 
 const useStyles = makeStyles((theme) => ({
   errorContainer: {
@@ -41,8 +45,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
 const InnerContent = (props) => {
   const classes = useStyles();
+
+
+
   if (props.monthlyData === null || props.yearlyData === null) {
     return (
       <Grid
@@ -88,6 +98,11 @@ const InnerContent = (props) => {
                   constants.variableMeasurements.latitude
                 }
               />
+
+              <BasicHelpIcon text={strings.latitudeDescription}/>
+
+              
+              
             </Grid>
             <Grid item xs={4}>
               <VariableCard
@@ -98,6 +113,7 @@ const InnerContent = (props) => {
                   constants.variableMeasurements.longitude
                 }
               />
+              <BasicHelpIcon text={strings.longitudeDescription}/>
             </Grid>
             <Grid item xs={4}>
               <VariableCard
@@ -108,9 +124,11 @@ const InnerContent = (props) => {
                   constants.variableMeasurements.elevation
                 }
               />
+              <BasicHelpIcon text={strings.elevationDescription}/>
             </Grid>
           </Grid>
         </Grid>
+        <br></br>
         <Grid item>
           <Grid container className={classes.titleContainer}>
             <Typography className={classes.titleText}>
@@ -133,6 +151,7 @@ const InnerContent = (props) => {
                   constants.variableMeasurements.GHI
                 }
               />
+              <BasicHelpIcon text={strings.globalHorizontalDescription}/>
             </Grid>
             <Grid item xs={4}>
               <VariableCard
@@ -144,6 +163,7 @@ const InnerContent = (props) => {
                   constants.variableMeasurements.DHI
                 }
               />
+              <BasicHelpIcon text={strings.diffuseHorizontalDescription}/>
             </Grid>
             <Grid item xs={4}>
               <VariableCard
@@ -155,6 +175,7 @@ const InnerContent = (props) => {
                   constants.variableMeasurements.DNI
                 }
               />
+              <BasicHelpIcon text={strings.directNormalDescription}/>
             </Grid>
           </Grid>
         </Grid>
@@ -182,6 +203,7 @@ const InnerContent = (props) => {
                   constants.variableMeasurements["Wind Speed"]
                 }
               />
+              <BasicHelpIcon text={strings.windSpeedDescription}/>
             </Grid>
             <Grid item xs={4}>
               <VariableCard
@@ -192,7 +214,10 @@ const InnerContent = (props) => {
                   constants.variableMeasurements["Solar Zenith Angle"]
                 }
               />
+              <BasicHelpIcon text={strings.solarZenithAngleDescription}/>
             </Grid>
+
+            
             <Grid item xs={4}>
               <VariableCard
                 selected={constants.variables[5] === props.variable}
@@ -202,13 +227,18 @@ const InnerContent = (props) => {
                   constants.variableMeasurements.Temperature
                 }
               />
+              <BasicHelpIcon text={strings.averageTemperatureDescription}/>
             </Grid>
           </Grid>
         </Grid>
         <Grid item>
           <SummaryGraph graphData={graphData} />
         </Grid>
+              
       </Grid>
+
+
+
     );
   }
 };
