@@ -21,5 +21,10 @@
   "engines": {
     "node": "12.18.3"
   },
-  "homepage": "https://github.com/ndiaz9/ProyectoODS-SitioWeb#readme"
+  "homepage": "https://github.com/ndiaz9/ProyectoODS-SitioWeb#readme",
+  "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/material": "^5.8.7"
+  }
 }

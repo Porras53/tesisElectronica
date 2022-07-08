@@ -5,7 +5,8 @@ import strings from "./strings/es.json";
 import colors from "./assets/colors/colors.json";
 import React from 'react';
 import Divv from '@material-ui/core/Divider';
-
+import InfoAlert from "./components/infoalert";
+import { StyledEngineProvider } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -155,6 +156,9 @@ function Docs() {
           
           
         </Grid>
+        <StyledEngineProvider injectFirst>
+    <InfoAlert />
+    </StyledEngineProvider>
       </Grid>
     </div>
   );

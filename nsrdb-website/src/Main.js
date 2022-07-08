@@ -7,6 +7,7 @@ import Prediction from "./Prediction";
 import Tutorial from "./Tutorial";
 import MainToolbar from "./components/mainToolbar";
 
+
 function Main() {
   return (
     <div>
