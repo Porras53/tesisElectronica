@@ -5,7 +5,7 @@ import strings from "./strings/es.json";
 import colors from "./assets/colors/colors.json";
 import React from 'react';
 import Divv from '@material-ui/core/Divider';
-import InfoAlert from "./components/infoalert";
+import InfoAlertButton from "./components/infoalertButton";
 import { StyledEngineProvider } from '@mui/material/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -79,6 +79,10 @@ function Docs() {
           <Typography variant="body1" align="justify" gutterBottom>
             {strings.aboutPp2}
           </Typography>
+
+          <br/>
+          
+          <InfoAlertButton />
 
         
 
@@ -157,7 +161,6 @@ function Docs() {
           
         </Grid>
         <StyledEngineProvider injectFirst>
-    <InfoAlert />
     </StyledEngineProvider>
       </Grid>
     </div>

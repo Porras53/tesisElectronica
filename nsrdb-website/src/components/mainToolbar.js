@@ -7,7 +7,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Toolbar from "@material-ui/core/Toolbar";
-import uniandesLogo from "../assets/images/logouniandes_0.png";
+import uniandesLogo from "../assets/images/LogoSolarAtlas.png";
 import strings from "../strings/es.json";
 import colors from "../assets/colors/colors.json";
 import { Typography } from "@material-ui/core";
@@ -118,7 +118,7 @@ export default function MainToolbar(props) {
         <Toolbar variant="dense">
           <img
             src={uniandesLogo}
-            alt="Uniandes Logo"
+            alt="Solar Atlas Logo"
             className={classes.mainLogo}
           ></img>
           <Tabs
@@ -154,13 +154,13 @@ export default function MainToolbar(props) {
             >
             </Tab>
             <Typography className={classes.miniSpace}></Typography>
-            <Tab
+            {/* <Tab
               className={c4}
               label={strings.tutorial}
               {...a11yProps(6)}
               href = "/tutorial"
             >
-            </Tab>
+            </Tab> */}
           </Tabs>
           <TabPanel value={value} index={0} href = "/">
             <Link className={classes.link} to="/">
@@ -174,15 +174,15 @@ export default function MainToolbar(props) {
             <Link className={classes.link} to="/docs">
             </Link>
           </TabPanel>
-          <TabPanel value={value} index={6} href = "/tutorial">
+          {/* <TabPanel value={value} index={6} href = "/tutorial">
             <Link className={classes.link} to="/tutorial">
             </Link>
-          </TabPanel>
+          </TabPanel> */}
 
           <Typography className = {classes.space}>
           </Typography>
           <Typography className = {classes.atlas}>
-            {"ATLAS SOLAR"}
+            {"ATLAS SOLAR - COLOMBIA"}
           </Typography>
         </Toolbar>
       </AppBar>

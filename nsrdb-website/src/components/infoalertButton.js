@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function AlertDialog() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,7 +19,11 @@ export default function AlertDialog() {
   };
 
   return (
+
     <div>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Conocer términos de uso
+      </Button>
       <Dialog
         open={open}
         onClose={handleClose}

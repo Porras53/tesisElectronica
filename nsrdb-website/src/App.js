@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Map from "./components/map";
 import SideContent from "./components/sideContent/sidecontent";
 import InfoCard from "./components/infocard";
+import InfoAlert from "./components/infoalert";
 import GenerationForm from "./components/generation/generationform";
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
       ) : (
         <GenerationForm coord={selectedCoord} year={year} variable={variable} />
       )}
+      <InfoAlert />
       <InfoCard
         coord={selectedCoord}
         onCoordChange={handleCoordChange}

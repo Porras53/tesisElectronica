@@ -7,6 +7,7 @@ import GenerationForm from "./components/generationParam/generationParam";
 import axios from "axios";
 import constants from "./utils/constants";
 import functions from "./utils/functions";
+import InfoAlert from "./components/infoalert";
 
 function Prediction() {
   
@@ -89,6 +90,7 @@ function Prediction() {
         onContentChange={handleContentChange}
         onReloadMap={handleReloadMap}
       />
+    <InfoAlert />
      <MapParam
         coord={selectedCoord}
         onCoordChange={handleCoordChange}
