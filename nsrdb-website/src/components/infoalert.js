@@ -36,8 +36,7 @@ export default function AlertDialog() {
             </Typography>
             <br></br>
             <Typography variant="body1" align="justify" gutterBottom>
-              La utilización del sitio web se realiza bajo las siguientes condiciones y advertencias: (1) los datos que se muestran en el sitio web han sido preparados sólo con fines de referencia; (2) los datos consisten o se basan en estimaciones o suposiciones hechas sobre la base de los mejores esfuerzos, basados en las expectativas de las condiciones actuales y futuras en el momento en que fueron desarrollados;  (3) estos datos fueron preparados con la información disponible en el momento de su desarrollo y están sujetos a cambios sin previo aviso; (4) el usuario se compromete a referenciar este sitio web en cualquier publicación que resulte de su uso.
-
+              La utilización del sitio web se realiza bajo las siguientes condiciones y advertencias: (1) las herramientas y datos que se muestran en el sitio web han sido preparados sólo con fines de referencia; (2) estas herramientas y datos fueron preparados con la información disponible en el momento de su desarrollo y están sujetos a cambios sin previo aviso; (3) el usuario se compromete a referenciar este sitio web en cualquier publicación que resulte de su uso.
             </Typography>
             <br></br>
             <Typography variant="body1" align="justify" gutterBottom>
